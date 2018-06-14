@@ -7,6 +7,8 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SENDGRID_PASSWORD
   }
 });
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 /**
  * GET /contact
@@ -49,14 +51,15 @@ exports.postContact = (req, res) => {
     fromEmail = req.user.email;
   }
 
-  const mailOptions = {
-    to: 'your@email.com',
+  const msg = {
+    to: 'dillonstreator@gmail.com',
     from: `${fromName} <${fromEmail}>`,
-    subject: 'Contact Form | Hackathon Starter',
-    text: req.body.message
+    subject: 'Contact Form | SportsBets',
+    text: req.body.message,
+    html: '<div>'+req.body.message+'</div><br/><br/><hr width="20%"align="left"/><strong>SportsBets</strong>',
   };
-
-  transporter.sendMail(mailOptions, (err) => {
+  console.log('msg:::',msg);
+  sgMail.send(msg, function(err){
     if (err) {
       req.flash('errors', { msg: err.message });
       return res.redirect('/contact');
@@ -64,4 +67,22 @@ exports.postContact = (req, res) => {
     req.flash('success', { msg: 'Email has been sent successfully!' });
     res.redirect('/contact');
   });
+  // req.flash('success', { msg: 'Email has been sent successfully!' });
+  // res.redirect('/contact');
+  
+  // const mailOptions = {
+  //   to: 'dillonstreator@gmail.com',
+  //   from: `${fromName} <${fromEmail}>`,
+  //   subject: 'Contact Form | SportsBets',
+  //   text: req.body.message
+  // };
+
+  // transporter.sendMail(mailOptions, (err) => {
+  //   if (err) {
+  //     req.flash('errors', { msg: err.message });
+  //     return res.redirect('/contact');
+  //   }
+  //   req.flash('success', { msg: 'Email has been sent successfully!' });
+  //   res.redirect('/contact');
+  // });
 };

@@ -1,0 +1,208 @@
+<%- include ../partials/header.ejs %>
+
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+        <h3>Profile Information</h3>
+    </div>
+    
+    <form action="/account/profile" method="POST">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right" for="email">Email</label>
+            <div class="col-md-7">
+                <input class="form-control" type="email" name="email" id="email" value="<%= user.email %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right" for="name">Name</label>
+            <div class="col-md-7">
+                <input class="form-control" type="text" name="name" id="name" value="<%= user.profile.name %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right">Gender</label>
+            <div class="col-sm-6">
+                <label class="radio col-sm-3">
+                    <input type="radio" name="gender" value="male" data-toggle="radio" <%= user.profile.gender=="male" ? "checked" : "" %>> 
+                    <span>Male</span>
+                </label>
+                <label class="radio col-sm-3">
+                    <input type="radio" name="gender" value="female" data-toggle="radio" <%= user.profile.gender=="female" ? "checked" : "" %>>
+                    <span>Female</span>
+                </label>
+                <label class="radio col-sm-3">
+                    <input type="radio" name="gender" value="other" data-toggle="radio" <%= user.profile.gender=="other" ? "checked" : "" %>>
+                    <span>Other</span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right" for="location">Location</label>
+            <div class="col-md-7">
+                <input class="form-control" type="text" name="location" id="location" value="<%= user.profile.location %>">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right">Gravatar</label>
+            <div class="col-md-4">
+                <img class="profile" width="100"height="100" src="<%= user.gravatar() %>" alt="">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="offset-sm-3 col-md-7 pl-2">
+                <button class="btn btn btn-primary" type="submit">
+                    <i class="fas fa-pencil-alt fa-sm"></i>
+                    | Update Profile
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+        <h3>Change Password</h3>
+    </div>
+
+    <form action="/account/password" method="POST">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right" for="password">New Password</label>
+            <div class="col-md-7">
+                <input class="form-control" type="password" name="password" id="password">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-3 col-form-label font-weight-bolt text-right" for="confirmPassword">Confirm Password</label>
+            <div class="col-md-7">
+                <input class="form-control" type="password" name="confirmPassword" id="confirmPassword">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="offset-sm-3 col-md-7 pl-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-lock fa-sm"></i>
+                    | Change Password
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+        <h3>Delete Account</h3>
+    </div>
+
+    <form action="/account/delete" method="POST">
+        <div class="form-group">
+            <p class="offset-sm-3 col-md-7 pl-2">You can delete your account, but keep in mind this action is irreversible.</p>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+            <div class="offset-sm-3 col-md-7 pl-2">
+                <button class="btn btn-danger" type="submit">
+                    <i class="fas fa-trash-alt fa-sm"></i>
+                    | Delete my account
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+        <h3>Linked Accounts</h3>
+    </div>
+
+    <div class="form-group">
+        <div class="offset-sm-3 col-md-7 pl-2">
+            <% if (user.facebook) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/facebook">
+                        Unlink your Facebook account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/facebook">
+                        Link your Facebook account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.instagram) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/instagram">
+                        Unlink your Instagram account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/instagram">
+                        Link your Instagram account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.google) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/google">
+                        Unlink your Google account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/google">
+                        Link your Google account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.twitter) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/twitter">
+                        Unlink your Twitter account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/twitter">
+                        Link your Twitter account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.github) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/github">
+                        Unlink your Github account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/github">
+                        Link your Github account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.linkedin) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/linkedin">
+                        Unlink your Linkedin account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/linkedin">
+                        Link your Linkedin account
+                    </a>
+                </p>
+            <% } %>
+            <% if (user.steam) { %>
+                <p class="mb-1">
+                    <a class="text-danger" href="/account/unlink/steam">
+                        Unlink your Steam account
+                    </a>
+                </p>
+            <% } else { %>
+                <p class="mb-1">
+                    <a href="/auth/steam">
+                        Link your Steam account
+                    </a>
+                </p>
+            <% } %>
+
+        </div>
+    </div>
+
+
+<%- include ../partials/footer.ejs %>

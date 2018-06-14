@@ -1,0 +1,42 @@
+<%- include ./partials/header.ejs %>
+
+    <div class="pb-2 mt-2 mb-4 border-bottom">
+
+        <h3>Contact Form</h3>
+
+    </div>
+
+    <form method="POST">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+        <% if (unknownUser) { %>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label font-weight-bold" for="name">Name</label>
+            <div class="col-md-8">
+                <input class="form-control" type="text" name="name" id="name" autofocus="true">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label font-weight-bold" for="email">Email</label>
+            <div class="col-md-8">
+                <input class="form-control" type="email" name="email" id="email" autofocus="true">
+            </div>
+        </div>
+        <% } %>
+        <div class="form-group row">
+            <label class="col-md-2 col-form-label font-weight-bold" for="message">Please describe the issue or your suggestion</label>
+            <div class="col-md-8">
+                <textarea rows="7" class="form-control" type="text" name="message" id="message" autofocus="true"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="offset-md-2 col-md-8 p-1">
+                <button class="btn btn-primary" type="submit">
+                    <i class="far fa-envelope fa-sm"></i>
+                    | Send
+                </button>
+            </div>
+        </div>
+
+    </form>
+
+<%- include ./partials/footer.ejs %>

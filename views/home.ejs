@@ -1,0 +1,47 @@
+<%- include ./partials/header.ejs %>
+
+    <div class="clock"></div>
+    <h1>SportsBets</h1>
+    <p class="lead">Welcome to SportsBets, the number one site for online realtime sports gambling</p>
+
+    <hr>
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <h2>Heading</h2>
+
+        </div>
+        <div class="col-md-6">
+
+            <h2>Heading</h2>
+
+        </div>
+        <div class="col-md-6">
+
+            <h2>Heading</h2>
+
+        </div>
+        <div class="col-md-6">
+
+            <h2>Heading</h2>
+
+        </div>
+        
+    </div>
+
+<link rel="stylesheet" href="/css/flipclock.css">
+<script src="/js/flipclock.min.js"></script>
+
+<script>
+    var date  = new Date(Date.UTC(2019, 1, 4, 12, 0, 0));
+    var now   = new Date();
+    var diff  = date.getTime()/1000 - now.getTime()/1000;
+    var clock = $('.clock').FlipClock(diff, { 
+        clockFace: 'DailyCounter',
+        countdown: true
+    });
+</script>
+
+<%- include ./partials/footer.ejs %>
